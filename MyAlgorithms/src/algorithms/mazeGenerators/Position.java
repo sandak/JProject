@@ -92,6 +92,13 @@ public class Position {
 		 position[2]--;
 		 return this;
 	}
+
+	public byte[] toByteArray() {
+		byte[] b = new byte[3];
+		for(int i = 0;i<3;i++)
+			b[i] = (byte)position[i];
+		return b;
+	}
 	
 	
 }

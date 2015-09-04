@@ -7,7 +7,7 @@ public class MyDecompressorInputStream extends InputStream {
 
 	InputStream in;
 	
-	MyDecompressorInputStream(InputStream ain)
+	public MyDecompressorInputStream(InputStream ain)
 	{
 		in = ain;
 	}
@@ -26,12 +26,19 @@ public class MyDecompressorInputStream extends InputStream {
 		int j = 0;
 		for (k=0;k<fsize;k+=2)
 		{
+			if (b.length<=j)
+				break;
 		last = (byte)in.read();
 		counter = (byte)in.read();
 		for(i=0;i<counter;i++)
-			b[j]=last;
+		{
+			if (b.length<=j)
+				break;
+			b[j++]=last;
 		}
-		return -1;
+			
+		}
+		return fsize-k;
 	}
 
 }

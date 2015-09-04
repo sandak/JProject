@@ -29,6 +29,23 @@ public Maze3d(int x, int y, int z) {
 	maze = new int[x][y][z];
 }
 
+
+public Maze3d(byte[] b) {
+	int i = 0;
+	int j,k,l;
+	this.x = (int)b[i++];
+	this.y = (int)b[i++];
+	this.z = (int)b[i++];
+	this.startPoint=new Position((int)b[i++],(int)b[i++],(int)b[i++]);
+	this.exitPoint=new Position((int)b[i++],(int)b[i++],(int)b[i++]);
+	maze = new int[x][y][z];
+	 for( j = 0; j<x;j++)
+	    	for ( k = 0; k < y; k++)
+	    		for ( l = 0; l < z; l++)
+	    			maze[j][k][l]=(int)b[i++];
+	
+}
+
 //get methods:
 public int getY() {
 	return y;
@@ -220,6 +237,43 @@ public String toString() {
     
     return output + "\nStart = " + startPoint+" \nExit = " + exitPoint;
 }
+
+public byte[] toByteArray()
+{
+	byte[] b = new byte[x*y*z+9];
+	int i = 0;
+	b[i++] = (byte)x;
+	b[i++] = (byte)y;
+	b[i++] = (byte)z;
+	byte[] tmp = startPoint.toByteArray();
+	for (byte c : tmp) 
+		b[i++] = c;
+	tmp = exitPoint.toByteArray();
+	for (byte c : tmp) 
+		b[i++] = c;
+	 for(int j = 0; j<x;j++)
+	    	for (int k = 0; k < y; k++)
+	    		for (int l = 0; l < z; l++)
+	    			b[i++]=(byte)maze[j][k][l];
+	return b;
+}
+
+//Relevant execution to equals method
+@Override
+  public boolean equals (Object o) {
+	Maze3d obj = ((Maze3d)o);
+if((this.x!=obj.getX())||(this.y!=obj.getY())||(this.z!=obj.getZ()))
+		return false;
+if(!(this.startPoint.equals(obj.getStartPosition()))||!(this.exitPoint.equals(obj.getExitPoint())))
+		return false;
+for(int j = 0; j<x;j++)
+	for (int k = 0; k < y; k++)
+		for (int l = 0; l < z; l++)
+			if(this.maze[j][k][l]!=obj.maze[j][k][l])
+				return false;
+return true;
+	
+	    }
 
 }
 
